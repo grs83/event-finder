@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import GenreList from './components/genre-list'
+import App from './app'
 
 ReactDOM.render(
-  <GenreList />, document.querySelector('#app')
+  <App />, document.querySelector('#app')
 )
