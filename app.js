@@ -1,10 +1,10 @@
 import React from 'react'
-import GenreList from './components/genre-selector/genres-list'
+import Genres from './components/genres-list/genres'
 
 export default function App() {
   return (
     <div>
-      <GenreList />
+      <Genres/>
     </div>
   )
 }

@@ -1,28 +1,28 @@
 import React from 'react'
 
-export const genreCardCategories = [
+export const genresCategories = [
   {
     title: 'CONCERTS',
     img: './img/concerts.jpg'
   },
   {
     title: 'SPORTS',
-    img: './img/concerts.jpg'
+    img: './img/sports.jpg'
   },
   {
     title: 'COMEDY',
-    img: './img/concerts.jpg'
+    img: './img/comedy.jpg'
   },
   {
     title: 'ARTS',
-    img: './img/concerts.jpg'
+    img: './img/arts.jpg'
   },
   {
     title: 'FOOD',
-    img: './img/concerts.jpg'
+    img: './img/food.jpg'
   },
   {
     title: 'TRADESHOWS',
-    img: './img/concerts.jpg'
+    img: './img/tradeshows.jpg'
   },
 ]
