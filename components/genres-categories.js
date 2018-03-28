@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-export const genresCategories = [
+export default [
   {
     title: 'CONCERTS',
     img: './img/concerts.jpg'
@@ -24,5 +24,5 @@ export const genresCategories = [
   {
     title: 'TRADESHOWS',
     img: './img/tradeshows.jpg'
-  },
-]
+  }
+];

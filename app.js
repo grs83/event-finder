@@ -1,10 +1,11 @@
-import React from 'react'
-import Genres from './components/genres'
+import React from 'react';
+import Genres from './components/genres';
+import genresCategories from './components/genres-categories';
 
 export default function App() {
   return (
     <div>
-      <Genres/>
+      <Genres genresCategories={genresCategories} />
     </div>
-  )
+  );
 }

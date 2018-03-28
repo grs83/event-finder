@@ -20,7 +20,6 @@
     "watchify": "^3.11.0"
   },
   "dependencies": {
-    "foundation-sites": "^6.4.4-rc1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   }
