@@ -1,16 +1,16 @@
 import React from 'react'
 import GenreCard from './genre-card'
 
-export default function Genre({ details }) {
+export default function Genre({ genreCategories }) {
   return (
     <div className='genre_wrapper'>
       {
-      details.map((item, i) => {
+      genreCategories.map((category, i) => {
         return (
           <GenreCard
             key={i}
-            title={details[i].title}
-            img={details[i].img}
+            title={genreCategories[i].title}
+            img={genreCategories[i].img}
             />
           )
         })
