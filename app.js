@@ -9,34 +9,43 @@ export default class App extends Component {
     this.state = {
       oArgs: {
         app_key: 'vC6JjzFkLQqRMX39',
-        q: 'music',
-        where: 91355,
-        date: 'April',
+        location: 'los angeles',
+        when: 'today',
+        category: 'concerts',
+        keywords: '',
+        within: '10',
+        units: 'mi',
+        title: '',
         include: 'tags,categories',
-        page_size: 5,
+        page_size: 10,
         sort_order: 'popularity'
       },
       events: [],
       showItems: true
     };
+    this.clickHandler = this.clickHandler.bind(this);
   }
 
-  componentDidMount() {
-    EVDB.API.call('/events/search', this.state.oArgs, function(response) {
-      this.setState({ events: response });
+  clickHandler(event) {
+    let state = Object.assign({}, this.state);
+    state.oArgs.category = event.target.textContent.toLowerCase();
+    EVDB.API.call('/events/search', this.state.oArgs, response => {
+      this.setState({ events: response.events.event });
     });
-    // .then(console.log(this.state.events))
   }
 
   render() {
     return (
       <div>
-        <Genres genresCategories={genresCategories} />
+        <Genres
+          clickHandler={this.clickHandler}
+          genresCategories={genresCategories}
+        />
         {this.state.showItems ? (
           <div>
-            <Items />
+            <Items events={this.state.events} />
           </div>
-        ) : null}
+        ) : null}.
       </div>
     );
   }
