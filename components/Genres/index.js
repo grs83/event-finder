@@ -1,7 +1,7 @@
 import React from 'react';
 import Genre from '../Genre';
 
-export default function Genres({ genresCategories }) {
+const Genres = ({ genresCategories }) => {
   return (
     <div>
       <h2 className="ui center aligned huge header">Find Your Enjoyment</h2>
@@ -16,4 +16,6 @@ export default function Genres({ genresCategories }) {
       </div>
     </div>
   );
-}
+};
+
+export default Genres;

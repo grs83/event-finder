@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function Item() {
+const Item = () => {
   return (
     <div className="item">
       <div className="ui small image">
-        <img src="http://d1marr3m5x4iac.cloudfront.net/images/small/I0-001/039/984/578-0.jpeg_/soulful-brunch-featuring-natalie-hanna-mendoza-qua-78.jpeg" />
+        <img src="http://d1marr3m5x4iac.cloudfront.net/images/medium…runch-featuring-natalie-hanna-mendoza-qua-78.jpeg" />
       </div>
       <div className="content">
         <div className="header">
@@ -27,4 +27,6 @@ export default function Item() {
       </div>
     </div>
   );
-}
+};
+
+export default Item;

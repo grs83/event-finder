@@ -1,7 +1,7 @@
 import React from 'react';
 import Item from '../item';
 
-export default function Items() {
+const Items = () => {
   return (
     <div className="ui grid" style={{ marginTop: '50px' }}>
       <div className="twelve wide centered column">
@@ -11,4 +11,6 @@ export default function Items() {
       </div>
     </div>
   );
-}
+};
+
+export default Items;
