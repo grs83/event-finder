@@ -2,7 +2,7 @@ import React from 'react';
 
 const Genre = ({ clickHandler, category: { img, title } }) => {
   return (
-    <div className="card" onClick={clickHandler}>
+    <div className="card pointer" onClick={clickHandler}>
       <img className="ui fluid image" src={img} />
       <div
         className="ui top aligned set active dimmer show"
