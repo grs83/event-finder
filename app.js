@@ -44,6 +44,7 @@ export default class App extends Component {
   clickHandler(event) {
     let state = Object.assign({}, this.state);
     state.oArgs.category = event.target.textContent.toLowerCase();
+    state.oArgs.page_number = 1;
     this.dataFetch();
     this.setState({
       showItems: true
@@ -55,7 +56,6 @@ export default class App extends Component {
     state.oArgs.page_number--;
     this.setState(state);
     this.dataFetch();
-    console.log(this.state);
   }
 
   clickPageNextHandler() {
@@ -63,7 +63,6 @@ export default class App extends Component {
     state.oArgs.page_number++;
     this.setState(state);
     this.dataFetch();
-    console.log(this.state);
   }
 
   render() {

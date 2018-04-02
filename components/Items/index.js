@@ -30,7 +30,11 @@ const Items = ({
                         : description.slice(0, 200) + '...'
                       : 'Sorry, no description at this time.'
                   }
-                  image={image ? image.block200.url : './img/logo.png'}
+                  image={
+                    image
+                      ? image.block200 ? image.block200.url : './img/logo.png'
+                      : './img/logo.png'
+                  }
                   key={id}
                 />
               );
