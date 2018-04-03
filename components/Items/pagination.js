@@ -6,9 +6,11 @@ const Pagination = ({
   clickPagePreviousHandler,
   clickPageNextHandler
 }) => {
-  console.log(pageNumber, pageCount);
   return (
-    <div className="ui one column centered grid" style={{ marginTop: '25px' }}>
+    <div
+      className="ui one column centered grid"
+      style={{ marginTop: '25px', marginBottom: '50px' }}
+    >
       <button
         onClick={clickPagePreviousHandler}
         disabled={pageNumber === 1}

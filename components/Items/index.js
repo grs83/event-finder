@@ -9,7 +9,8 @@ const Items = ({
   pageNumber,
   clickPagePreviousHandler,
   clickPageNextHandler,
-  showItems
+  showItems,
+  clickHandler
 }) => {
   return (
     <div className="ui container grid" style={{ marginTop: '50px' }}>
@@ -20,6 +21,7 @@ const Items = ({
             ({ title, image, start_time, venue_name, description, id }) => {
               return (
                 <Item
+                  clickHandler={clickHandler}
                   title={title}
                   start_time={start_time}
                   venue_name={venue_name}

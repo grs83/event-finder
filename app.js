@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Genres from './components/genres';
 import genresCategories from './components/genres-categories';
 import Items from './components/items';
+import Modal from './components/item-modal';
 
 export default class App extends Component {
   constructor(props) {
@@ -24,12 +25,15 @@ export default class App extends Component {
       },
       page_count: 0,
       events: [],
-      showItems: false
+      showItems: false,
+      showModal: false,
+      modalItem: {}
     };
-    this.clickHandler = this.clickHandler.bind(this);
+    this.clickGenreHandler = this.clickGenreHandler.bind(this);
     this.clickPagePreviousHandler = this.clickPagePreviousHandler.bind(this);
     this.clickPageNextHandler = this.clickPageNextHandler.bind(this);
     this.dataFetch = this.dataFetch.bind(this);
+    this.clickItemHandler = this.clickItemHandler.bind(this);
   }
 
   dataFetch() {
@@ -41,7 +45,7 @@ export default class App extends Component {
     });
   }
 
-  clickHandler(event) {
+  clickGenreHandler(event) {
     let state = Object.assign({}, this.state);
     state.oArgs.category = event.target.textContent.toLowerCase();
     state.oArgs.page_number = 1;
@@ -65,15 +69,26 @@ export default class App extends Component {
     this.dataFetch();
   }
 
+  clickItemHandler(title) {
+    let event = this.state.events.filter(event => event.title == title);
+    this.setState({
+      showModal: true,
+      modalItem: event
+    });
+  }
+
   render() {
     return (
       <div>
         <Genres
-          clickHandler={this.clickHandler}
+          clickHandler={this.clickGenreHandler}
           genresCategories={genresCategories}
         />
         {this.state.showItems ? (
           <div>
+            {this.state.showModal ? (
+              <Modal clickHandler={() => this.setState({ showModal: false })} />
+            ) : null}
             <Items
               events={this.state.events}
               title={this.state.oArgs.category}
@@ -82,6 +97,7 @@ export default class App extends Component {
               clickPagePreviousHandler={this.clickPagePreviousHandler}
               clickPageNextHandler={this.clickPageNextHandler}
               showItems={this.state.showItems}
+              clickHandler={this.clickItemHandler}
             />
           </div>
         ) : null}.
