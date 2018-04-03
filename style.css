@@ -1,0 +1,10 @@
+.pointer:hover {
+  position: relative;
+  top: -2px;
+  box-shadow: 2px 0 5px #616161;
+  cursor: pointer;
+}
+
+.grey:hover {
+  background-color: #ccc;
+}
