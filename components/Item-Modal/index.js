@@ -18,6 +18,12 @@ function createMarkup(text) {
   return { __html: text };
 }
 
+function headerDetails(start_time, stop_time, venue_name) {
+  return `Starts at: ${timeConverter(start_time.split(' ')[1])} | Ends at: ${
+    stop_time ? timeConverter(stop_time.split(' ')[1]) : 'No End Time'
+  } | On: ${dateConverter(start_time.split(' ')[0])} | At: ${venue_name}`;
+}
+
 const Modal = ({
   clickHandler,
   event: {
@@ -30,6 +36,9 @@ const Modal = ({
     venue_url
   }
 }) => {
+  const descriptionVerified = !description
+    ? 'Sorry, no description available at this time.'
+    : description;
   return (
     <div
       className="ui active dimmer"
@@ -63,37 +72,31 @@ const Modal = ({
           </div>
           <div className="description" style={{ width: '500px' }}>
             <div className="ui header">
-              {`Starts at: ${timeConverter(
-                start_time.split(' ')[1]
-              )} | Ends at: ${
-                stop_time
-                  ? timeConverter(stop_time.split(' ')[1])
-                  : 'No End Time'
-              } | On: ${dateConverter(
-                start_time.split(' ')[0]
-              )} | At: ${venue_name}`}
+              {headerDetails(start_time, stop_time, venue_name)}
             </div>
             <div>
               <div
                 style={{
-                  fontSize: '1em',
-                  fontWeight: '200',
                   maxHeight: '225px',
                   overflow: 'scroll'
                 }}
               >
                 <p
-                  dangerouslySetInnerHTML={createMarkup(description)}
+                  dangerouslySetInnerHTML={createMarkup(descriptionVerified)}
                   style={{
-                    fontSize: '12px'
+                    fontSize: '14px'
                   }}
                 />
               </div>
-              {venue_url ? (
-                <a target="blank" href={venue_url}>
+              {venue_url && (
+                <a
+                  style={{ marginTop: '10px', float: 'right' }}
+                  target="blank"
+                  href={venue_url}
+                >
                   More Info >
                 </a>
-              ) : null}
+              )}
             </div>
           </div>
         </div>
