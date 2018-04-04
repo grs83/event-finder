@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SearchBar = ({ location }) => {
+const SearchBar = ({ location, inputLocationChnage, clickHandler }) => {
   return (
     <div
       className="ui secondary  menu"
@@ -27,16 +27,34 @@ const SearchBar = ({ location }) => {
               <input
                 type="text"
                 placeholder="Search..."
-                style={{ width: '300px', marginRight: '3px' }}
+                style={{
+                  width: '300px',
+                  marginRight: '3px',
+                  textAlign: 'center'
+                }}
               />
               <i className="search link icon" />
             </div>
             <div className="ui icon input">
               <input
+                onChange={inputLocationChnage}
                 type="text"
                 placeholder={location ? location : 'Search Location or Zip'}
+                style={{ textAlign: 'center' }}
               />
               <i className="location arrow icon" />
+            </div>
+            <div
+              className="ui ok inverted button pointer"
+              onClick={clickHandler}
+              style={{
+                borderRadius: '5px',
+                marginLeft: '3px',
+                height: '36px',
+                width: '125px'
+              }}
+            >
+              Find
             </div>
           </div>
         </div>

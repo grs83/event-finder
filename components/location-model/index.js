@@ -10,8 +10,27 @@ const Location = ({ inputChange, clickHandler, locationModal }) => {
             className="ui basic active modal"
             style={{ position: 'fixed', top: '30%' }}
           >
-            <div className="ui icon header">
-              <i className="map outline icon" />
+            <h2
+              style={{
+                textAlign: 'center',
+                letterSpacing: '1.25px'
+              }}
+            >
+              Welcome To Event Finder!
+            </h2>
+            <img
+              className="ui mini image"
+              style={{
+                height: '75px',
+                width: '75px',
+                margin: '0 auto'
+              }}
+              src="./img/logo-white.png"
+            />
+            <div
+              className="ui icon header"
+              style={{ letterSpacing: '1.25px', fontWeight: '200' }}
+            >
               Where do you want to search?
             </div>
             <div

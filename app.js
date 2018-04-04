@@ -31,15 +31,14 @@ export default class App extends Component {
       showItems: false,
       showModal: false,
       modalItem: {},
-      locationModal: false,
-      welcomeMessage: true
+      locationModal: false
     };
     this.clickGenreHandler = this.clickGenreHandler.bind(this);
     this.clickPagePreviousHandler = this.clickPagePreviousHandler.bind(this);
     this.clickPageNextHandler = this.clickPageNextHandler.bind(this);
     this.dataFetch = this.dataFetch.bind(this);
     this.clickItemHandler = this.clickItemHandler.bind(this);
-    this.inputChange = this.inputChange.bind(this);
+    this.inputLocationChange = this.inputLocationChange.bind(this);
   }
 
   dataFetch() {
@@ -86,7 +85,7 @@ export default class App extends Component {
     });
   }
 
-  inputChange(event) {
+  inputLocationChange(event) {
     let state = Object.assign({}, this.state);
     state.oArgs.location = event.target.value;
   }
@@ -102,11 +101,16 @@ export default class App extends Component {
     return (
       <div>
         <Location
-          inputChange={this.inputChange}
+          welcomeMessage={this.state.welcomeMessage}
+          inputChange={this.inputLocationChange}
           clickHandler={() => this.setState({ locationModal: false })}
           locationModal={this.state.locationModal}
         />
-        <SearchBar location={this.state.oArgs.location} />
+        <SearchBar
+          inputLocationChnage={this.inputLocationChange}
+          location={this.state.oArgs.location}
+          clickHandler={() => this.dataFetch()}
+        />
         <Genres
           clickHandler={this.clickGenreHandler}
           genresCategories={genresCategories}
@@ -145,7 +149,7 @@ export default class App extends Component {
               clickPageNextHandler={this.clickPageNextHandler}
             />
           </div>
-        )}.
+        )}
       </div>
     );
   }
