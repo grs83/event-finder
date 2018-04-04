@@ -18,16 +18,26 @@ function createMarkup(text) {
   return { __html: text };
 }
 
-const Item = ({ title, image, start_time, venue_name, description }) => {
+const Item = ({
+  title,
+  image,
+  start_time,
+  venue_name,
+  description,
+  clickHandler
+}) => {
   const time = start_time.split(' ')[1];
   return (
-    <div className="item pointer grey">
+    <div className="item pointer grey" onClick={() => clickHandler(title)}>
       <div className="content">
         <div className="header" style={{ marginTop: '2%' }}>
           {title}
         </div>
         <br />
-        <span className="date" style={{ marginBottom: '5px' }}>
+        <span
+          className="date"
+          style={{ marginTop: '10px', marginBottom: '5px' }}
+        >
           Date: {dateConverter(start_time.split(' ')[0])}
         </span>
         <br />
@@ -41,7 +51,7 @@ const Item = ({ title, image, start_time, venue_name, description }) => {
         </div>
       </div>
       <div className="ui small image" style={{ paddingLeft: '10px' }}>
-        <img src={image} />
+        <img src={image} style={{ marginTop: '10px' }} />
       </div>
     </div>
   );
