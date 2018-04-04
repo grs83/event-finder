@@ -4,7 +4,8 @@ import genresCategories from './components/genres-categories';
 import Items from './components/items';
 import Pagination from './components/items/pagination';
 import Modal from './components/item-modal';
-import Location from './components/location-modal';
+import Location from './components/location-model';
+import SearchBar from './components/searchbar';
 
 export default class App extends Component {
   constructor(props) {
@@ -100,6 +101,12 @@ export default class App extends Component {
   render() {
     return (
       <div>
+        <Location
+          inputChange={this.inputChange}
+          clickHandler={() => this.setState({ locationModal: false })}
+          locationModal={this.state.locationModal}
+        />
+        <SearchBar location={this.state.oArgs.location} />
         <Genres
           clickHandler={this.clickGenreHandler}
           genresCategories={genresCategories}
