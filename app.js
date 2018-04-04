@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Genres from './components/genres';
 import genresCategories from './components/genres-categories';
 import Items from './components/items';
+import Pagination from './components/items/pagination';
 import Modal from './components/item-modal';
+import Location from './components/location-modal';
 
 export default class App extends Component {
   constructor(props) {
@@ -10,7 +12,7 @@ export default class App extends Component {
     this.state = {
       oArgs: {
         app_key: 'vC6JjzFkLQqRMX39',
-        location: 'los angeles',
+        location: '',
         when: 'today',
         category: '',
         keywords: '',
@@ -27,13 +29,16 @@ export default class App extends Component {
       events: [],
       showItems: false,
       showModal: false,
-      modalItem: {}
+      modalItem: {},
+      locationModal: false,
+      welcomeMessage: true
     };
     this.clickGenreHandler = this.clickGenreHandler.bind(this);
     this.clickPagePreviousHandler = this.clickPagePreviousHandler.bind(this);
     this.clickPageNextHandler = this.clickPageNextHandler.bind(this);
     this.dataFetch = this.dataFetch.bind(this);
     this.clickItemHandler = this.clickItemHandler.bind(this);
+    this.inputChange = this.inputChange.bind(this);
   }
 
   dataFetch() {
@@ -49,15 +54,17 @@ export default class App extends Component {
     let state = Object.assign({}, this.state);
     state.oArgs.category = event.target.textContent.toLowerCase();
     state.oArgs.page_number = 1;
-    this.dataFetch();
     this.setState({
-      showItems: true
+      showItems: true,
+      events: []
     });
+    this.dataFetch();
   }
 
   clickPagePreviousHandler() {
     let state = Object.assign({}, this.state);
     state.oArgs.page_number--;
+    state.events = [];
     this.setState(state);
     this.dataFetch();
   }
@@ -65,6 +72,7 @@ export default class App extends Component {
   clickPageNextHandler() {
     let state = Object.assign({}, this.state);
     state.oArgs.page_number++;
+    state.events = [];
     this.setState(state);
     this.dataFetch();
   }
@@ -73,7 +81,19 @@ export default class App extends Component {
     let event = this.state.events.filter(event => event.title == title);
     this.setState({
       showModal: true,
-      modalItem: event
+      modalItem: event[0]
+    });
+  }
+
+  inputChange(event) {
+    let state = Object.assign({}, this.state);
+    state.oArgs.location = event.target.value;
+  }
+
+  componentDidMount() {
+    event.preventDefault();
+    this.setState({
+      locationModal: true
     });
   }
 
@@ -84,23 +104,41 @@ export default class App extends Component {
           clickHandler={this.clickGenreHandler}
           genresCategories={genresCategories}
         />
-        {this.state.showItems ? (
+        {!this.state.showItems ? null : (
           <div>
-            {this.state.showModal ? (
-              <Modal clickHandler={() => this.setState({ showModal: false })} />
-            ) : null}
-            <Items
-              events={this.state.events}
-              title={this.state.oArgs.category}
+            {!this.state.showModal ? null : (
+              <Modal
+                event={this.state.modalItem}
+                clickHandler={() => this.setState({ showModal: false })}
+              />
+            )}
+            <h2
+              className="ui center aligned header"
+              style={{ marginTop: '50px' }}
+            >
+              {this.state.oArgs.category.toUpperCase()}
+            </h2>
+            {this.state.events.length < 1 ? (
+              <div
+                className="ui active centered inline large loader"
+                style={{ width: '100vw', height: '200px', marginTop: '50px' }}
+              />
+            ) : (
+              <Items
+                events={this.state.events}
+                title={this.state.oArgs.category}
+                showItems={this.state.showItems}
+                clickHandler={this.clickItemHandler}
+              />
+            )}
+            <Pagination
               pageCount={this.state.page_count}
               pageNumber={this.state.oArgs.page_number}
               clickPagePreviousHandler={this.clickPagePreviousHandler}
               clickPageNextHandler={this.clickPageNextHandler}
-              showItems={this.state.showItems}
-              clickHandler={this.clickItemHandler}
             />
           </div>
-        ) : null}.
+        )}.
       </div>
     );
   }

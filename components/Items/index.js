@@ -1,22 +1,11 @@
 import React from 'react';
 import Item from '../item';
-import Pagination from './pagination';
 
-const Items = ({
-  events,
-  title,
-  pageCount,
-  pageNumber,
-  clickPagePreviousHandler,
-  clickPageNextHandler,
-  showItems,
-  clickHandler
-}) => {
+const Items = ({ events, title, showItems, clickHandler }) => {
   return (
     <div className="ui container grid" style={{ marginTop: '50px' }}>
       <div className="twelve wide centered column">
         <div className="ui divided items">
-          <h2 className="ui center aligned header">{title.toUpperCase()}</h2>
           {events.map(
             ({ title, image, start_time, venue_name, description, id }) => {
               return (
@@ -42,12 +31,6 @@ const Items = ({
               );
             }
           )}
-          <Pagination
-            pageNumber={pageNumber}
-            pageCount={pageCount}
-            clickPagePreviousHandler={clickPagePreviousHandler}
-            clickPageNextHandler={clickPageNextHandler}
-          />
         </div>
       </div>
     </div>

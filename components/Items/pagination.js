@@ -37,6 +37,10 @@ const Pagination = ({
         <i className="right arrow icon" />
         Next
       </button>
+      <br />
+      <div className="row">
+        <p>{`Returned ${pageCount} pages`}</p>
+      </div>
     </div>
   );
 };
