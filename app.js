@@ -4,7 +4,9 @@ import genresCategories from './components/genres-categories';
 import Items from './components/items';
 import Pagination from './components/items/pagination';
 import Modal from './components/item-modal';
-import Location from './components/location-modal';
+import Location from './components/location-model';
+import SearchBar from './components/searchbar';
+import NoResultsModal from './components/searchbar/no-results';
 
 export default class App extends Component {
   constructor(props) {
@@ -16,7 +18,7 @@ export default class App extends Component {
         when: 'today',
         category: '',
         keywords: '',
-        within: '10',
+        within: '30',
         units: 'mi',
         title: '',
         include: 'tags,categories',
@@ -31,22 +33,30 @@ export default class App extends Component {
       showModal: false,
       modalItem: {},
       locationModal: false,
-      welcomeMessage: true
+      noResultsModal: false
     };
     this.clickGenreHandler = this.clickGenreHandler.bind(this);
     this.clickPagePreviousHandler = this.clickPagePreviousHandler.bind(this);
     this.clickPageNextHandler = this.clickPageNextHandler.bind(this);
     this.dataFetch = this.dataFetch.bind(this);
     this.clickItemHandler = this.clickItemHandler.bind(this);
-    this.inputChange = this.inputChange.bind(this);
+    this.inputLocationChange = this.inputLocationChange.bind(this);
+    this.inputSearchChange = this.inputSearchChange.bind(this);
+    this.clickNoResultsHandler = this.clickNoResultsHandler.bind(this);
   }
 
   dataFetch() {
     EVDB.API.call('/events/search', this.state.oArgs, response => {
-      this.setState({
-        events: response.events.event,
-        page_count: response.page_count
-      });
+      if (response.total_items == 0) {
+        this.setState({
+          noResultsModal: true
+        });
+      } else {
+        this.setState({
+          events: response.events.event,
+          page_count: response.page_count
+        });
+      }
     });
   }
 
@@ -54,6 +64,7 @@ export default class App extends Component {
     let state = Object.assign({}, this.state);
     state.oArgs.category = event.target.textContent.toLowerCase();
     state.oArgs.page_number = 1;
+    state.oArgs.keywords = '';
     this.setState({
       showItems: true,
       events: []
@@ -85,9 +96,36 @@ export default class App extends Component {
     });
   }
 
-  inputChange(event) {
-    let state = Object.assign({}, this.state);
-    state.oArgs.location = event.target.value;
+  inputLocationChange(event) {
+    let newOargs = Object.assign({}, this.state.oArgs, {
+      location: event.target.value
+    });
+    let state = Object.assign({}, this.state, {
+      oArgs: newOargs
+    });
+    this.setState(state);
+  }
+
+  inputSearchChange(event) {
+    let newOargs = Object.assign({}, this.state.oArgs, {
+      category: '',
+      keywords: event.target.value
+    });
+    let state = Object.assign({}, this.state, {
+      oArgs: newOargs
+    });
+    this.setState(state);
+  }
+
+  clickNoResultsHandler() {
+    let newOargs = Object.assign({}, this.state.oArgs, {
+      keywords: ''
+    });
+    let state = Object.assign({}, this.state, {
+      oArgs: newOargs,
+      noResultsModal: false
+    });
+    this.setState(state);
   }
 
   componentDidMount() {
@@ -100,16 +138,43 @@ export default class App extends Component {
   render() {
     return (
       <div>
+        <Location
+          welcomeMessage={this.state.welcomeMessage}
+          inputChange={this.inputLocationChange}
+          clickHandler={() => this.setState({ locationModal: false })}
+          locationModal={this.state.locationModal}
+        />
+        <NoResultsModal
+          clickHandler={this.clickNoResultsHandler}
+          noResultsModal={this.state.noResultsModal}
+        />
+        <SearchBar
+          inputSearchChange={this.inputSearchChange}
+          inputLocationChange={this.inputLocationChange}
+          search={this.state.oArgs.keywords}
+          location={this.state.oArgs.location}
+          clickHandler={() => this.dataFetch()}
+        />
+        <div style={{ height: '100px' }} />
         <Genres
           clickHandler={this.clickGenreHandler}
           genresCategories={genresCategories}
         />
-        {!this.state.showItems ? null : (
+        {this.state.showItems && (
           <div>
-            {!this.state.showModal ? null : (
+            {this.state.showModal && (
               <Modal
                 event={this.state.modalItem}
-                clickHandler={() => this.setState({ showModal: false })}
+                clickHandler={() => {
+                  let oArgs = Object.assign({}, this.state.oArgs, {
+                    keywords: ''
+                  });
+                  let state = Object.assign({}, this.state, {
+                    oArgs,
+                    showModal: false
+                  });
+                  this.setState(state);
+                }}
               />
             )}
             <h2
@@ -138,7 +203,7 @@ export default class App extends Component {
               clickPageNextHandler={this.clickPageNextHandler}
             />
           </div>
-        )}.
+        )}
       </div>
     );
   }
