@@ -40,6 +40,7 @@ export default class App extends Component {
     this.clickPageNextHandler = this.clickPageNextHandler.bind(this);
     this.dataFetch = this.dataFetch.bind(this);
     this.clickItemHandler = this.clickItemHandler.bind(this);
+    this.clickHandlerModal = this.clickHandlerModal.bind(this);
     this.inputLocationChange = this.inputLocationChange.bind(this);
     this.inputSearchChange = this.inputSearchChange.bind(this);
     this.clickNoResultsHandler = this.clickNoResultsHandler.bind(this);
@@ -61,21 +62,29 @@ export default class App extends Component {
   }
 
   clickGenreHandler(event) {
-    let state = Object.assign({}, this.state);
-    state.oArgs.category = event.target.textContent.toLowerCase();
-    state.oArgs.page_number = 1;
-    state.oArgs.keywords = '';
-    this.setState({
+    let newOargs = Object.assign({}, this.state.oArgs, {
+      category: event.target.textContent.toLowerCase(),
+      page_number: 1,
+      keywords: ''
+    });
+    let state = Object.assign({}, this.state, {
+      oArgs: newOargs,
       showItems: true,
       events: []
     });
+    this.setState(state);
     this.dataFetch();
   }
 
   clickPagePreviousHandler() {
-    let state = Object.assign({}, this.state);
-    state.oArgs.page_number--;
-    state.events = [];
+    let newOargs = Object.assign({}, this.state.oArgs, {
+      page_number: page_number--
+    });
+    let state = Object.assign({}, this.state, {
+      oArgs: newOargs,
+      events: []
+    });
+    console.log(this.state.oArgs.page_number);
     this.setState(state);
     this.dataFetch();
   }
@@ -94,6 +103,13 @@ export default class App extends Component {
       showModal: true,
       modalItem: event[0]
     });
+  }
+
+  clickHandlerModal() {
+    let state = Object.assign({}, this.state, {
+      showModal: false
+    });
+    this.setState(state);
   }
 
   inputLocationChange(event) {
@@ -165,16 +181,7 @@ export default class App extends Component {
             {this.state.showModal && (
               <Modal
                 event={this.state.modalItem}
-                clickHandler={() => {
-                  let oArgs = Object.assign({}, this.state.oArgs, {
-                    keywords: ''
-                  });
-                  let state = Object.assign({}, this.state, {
-                    oArgs,
-                    showModal: false
-                  });
-                  this.setState(state);
-                }}
+                clickHandler={this.clickHandlerModal}
               />
             )}
             <h2
