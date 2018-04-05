@@ -72,29 +72,29 @@ export default class App extends Component {
       showItems: true,
       events: []
     });
-    this.setState(state);
-    this.dataFetch();
+    this.setState(state, () => this.dataFetch());
   }
 
   clickPagePreviousHandler() {
     let newOargs = Object.assign({}, this.state.oArgs, {
-      page_number: page_number--
+      page_number: this.state.oArgs.page_number - 1
     });
     let state = Object.assign({}, this.state, {
       oArgs: newOargs,
       events: []
     });
-    console.log(this.state.oArgs.page_number);
-    this.setState(state);
-    this.dataFetch();
+    this.setState(state, () => this.dataFetch());
   }
 
   clickPageNextHandler() {
-    let state = Object.assign({}, this.state);
-    state.oArgs.page_number++;
-    state.events = [];
-    this.setState(state);
-    this.dataFetch();
+    let newOargs = Object.assign({}, this.state.oArgs, {
+      page_number: this.state.oArgs.page_number + 1
+    });
+    let state = Object.assign({}, this.state, {
+      oArgs: newOargs,
+      events: []
+    });
+    this.setState(state, () => this.dataFetch());
   }
 
   clickItemHandler(title) {
