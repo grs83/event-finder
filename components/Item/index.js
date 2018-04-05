@@ -26,7 +26,6 @@ const Item = ({
   description,
   clickHandler
 }) => {
-  const time = start_time.split(' ')[1];
   return (
     <div className="item pointer grey" onClick={() => clickHandler(title)}>
       <div className="content">
