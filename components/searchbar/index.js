@@ -1,10 +1,25 @@
 import React from 'react';
 
-const SearchBar = ({ location, inputLocationChnage, clickHandler }) => {
+const SearchBar = ({
+  search,
+  location,
+  inputLocationChange,
+  inputSearchChange,
+  clickHandler
+}) => {
   return (
     <div
       className="ui secondary  menu"
-      style={{ marginTop: '0', backgroundColor: '#333', height: '60px' }}
+      style={{
+        marginTop: '0',
+        paddingTop: '8px',
+        backgroundColor: '#333',
+        height: '77px',
+        width: '100vw',
+        position: 'fixed',
+        boxShadow: '0 3px 8px #525252',
+        zIndex: '99'
+      }}
     >
       <div
         className="ui secondary  menu"
@@ -25,7 +40,9 @@ const SearchBar = ({ location, inputLocationChnage, clickHandler }) => {
           <div className="item">
             <div className="ui icon input">
               <input
+                onChange={inputSearchChange}
                 type="text"
+                value={search || ''}
                 placeholder="Search..."
                 style={{
                   width: '300px',
@@ -37,9 +54,10 @@ const SearchBar = ({ location, inputLocationChnage, clickHandler }) => {
             </div>
             <div className="ui icon input">
               <input
-                onChange={inputLocationChnage}
+                onChange={inputLocationChange}
                 type="text"
-                placeholder={location ? location : 'Search Location or Zip'}
+                value={location || ''}
+                placeholder="Search Location or Zip"
                 style={{ textAlign: 'center' }}
               />
               <i className="location arrow icon" />
