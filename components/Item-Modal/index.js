@@ -1,27 +1,10 @@
 import React from 'react';
-
-function timeConverter(time) {
-  const part = time.split(':');
-  if (part[0] < 12) {
-    return part[0] + ':' + part[1] + ' am';
-  } else {
-    return part[0] - 12 + ':' + part[1] + ' pm';
-  }
-}
-
-function dateConverter(date) {
-  const part = date.split('-');
-  return part[1] + '/' + part[2] + '/' + part[0];
-}
-
-function createMarkup(text) {
-  return { __html: text };
-}
+import { TimeConverter, DateConverter, CreateMarkup } from '../util';
 
 function headerDetails(start_time, stop_time, venue_name) {
-  return `Starts at: ${timeConverter(start_time.split(' ')[1])} | Ends at: ${
-    stop_time ? timeConverter(stop_time.split(' ')[1]) : 'No End Time'
-  } | On: ${dateConverter(start_time.split(' ')[0])} | At: ${venue_name}`;
+  return `Starts at: ${TimeConverter(start_time.split(' ')[1])} | Ends at: ${
+    stop_time ? TimeConverter(stop_time.split(' ')[1]) : 'No End Time'
+  } | On: ${DateConverter(start_time.split(' ')[0])} | At: ${venue_name}`;
 }
 
 const Modal = ({
@@ -82,7 +65,7 @@ const Modal = ({
                 }}
               >
                 <p
-                  dangerouslySetInnerHTML={createMarkup(descriptionVerified)}
+                  dangerouslySetInnerHTML={CreateMarkup(descriptionVerified)}
                   style={{
                     fontSize: '14px'
                   }}
