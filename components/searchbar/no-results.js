@@ -3,7 +3,7 @@ import React from 'react';
 const NoResultsModal = ({ clickHandler, noResultsModal }) => {
   return (
     <div>
-      {!noResultsModal ? null : (
+      {noResultsModal && (
         <div>
           <div className="ui active dimmer" style={{ position: 'fixed' }} />
           <div

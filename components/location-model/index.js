@@ -3,7 +3,7 @@ import React from 'react';
 const Location = ({ inputChange, clickHandler, locationModal }) => {
   return (
     <div>
-      {!locationModal ? null : (
+      {locationModal && (
         <div>
           <div className="ui active dimmer" />
           <div

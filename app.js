@@ -160,9 +160,9 @@ export default class App extends Component {
           clickHandler={this.clickGenreHandler}
           genresCategories={genresCategories}
         />
-        {!this.state.showItems ? null : (
+        {this.state.showItems && (
           <div>
-            {!this.state.showModal ? null : (
+            {this.state.showModal && (
               <Modal
                 event={this.state.modalItem}
                 clickHandler={() => {
