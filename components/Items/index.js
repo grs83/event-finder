@@ -13,18 +13,8 @@ const Items = ({ events, title, showItems, clickHandler }) => {
                 title={title}
                 start_time={start_time}
                 venue_name={venue_name}
-                description={
-                  description
-                    ? description.length < 200
-                      ? description
-                      : description.slice(0, 200) + '...'
-                    : 'Sorry, no description at this time.'
-                }
-                image={
-                  image
-                    ? image.block200 ? image.block200.url : './img/logo.png'
-                    : './img/logo.png'
-                }
+                description={description}
+                image={image}
                 key={id}
               />
             );
