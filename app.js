@@ -7,6 +7,7 @@ import Modal from './components/item-modal';
 import Location from './components/location-model';
 import SearchBar from './components/searchbar';
 import NoResultsModal from './components/searchbar/no-results';
+import Options from './components/search-options';
 
 export default class App extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export default class App extends Component {
       oArgs: {
         app_key: 'vC6JjzFkLQqRMX39',
         location: '',
-        when: 'today',
+        when: 'this week',
         category: '',
         keywords: '',
         within: '15',
@@ -24,7 +25,7 @@ export default class App extends Component {
         include: 'tags,categories',
         image_sizes: ['block200', 'large'],
         page_number: 1,
-        page_size: 10,
+        page_size: 15,
         sort_order: 'popularity'
       },
       page_count: 0,
@@ -43,6 +44,7 @@ export default class App extends Component {
     this.clickHandlerModal = this.clickHandlerModal.bind(this);
     this.inputLocationChange = this.inputLocationChange.bind(this);
     this.inputSearchChange = this.inputSearchChange.bind(this);
+    this.clickHandlerSearchBar = this.clickHandlerSearchBar.bind(this);
     this.clickNoResultsHandler = this.clickNoResultsHandler.bind(this);
   }
 
@@ -144,6 +146,11 @@ export default class App extends Component {
     this.setState(state);
   }
 
+  clickHandlerSearchBar() {
+    this.setState({ showItems: true });
+    this.dataFetch();
+  }
+
   componentDidMount() {
     event.preventDefault();
     this.setState({
@@ -169,13 +176,17 @@ export default class App extends Component {
           inputLocationChange={this.inputLocationChange}
           search={this.state.oArgs.keywords}
           location={this.state.oArgs.location}
-          clickHandler={() => this.dataFetch()}
+          clickHandler={this.clickHandlerSearchBar}
         />
         <div style={{ height: '100px' }} />
-        <Genres
-          clickHandler={this.clickGenreHandler}
-          genresCategories={genresCategories}
-        />
+        {!this.state.showItems && (
+          <div>
+            <Genres
+              clickHandler={this.clickGenreHandler}
+              genresCategories={genresCategories}
+            />
+          </div>
+        )}
         {this.state.showItems && (
           <div>
             {this.state.showModal && (
@@ -190,25 +201,35 @@ export default class App extends Component {
             >
               {this.state.oArgs.category.toUpperCase()}
             </h2>
-            {this.state.events.length < 1 ? (
-              <div
-                className="ui active centered inline large loader"
-                style={{ width: '100vw', height: '200px', marginTop: '50px' }}
-              />
-            ) : (
-              <Items
-                events={this.state.events}
-                title={this.state.oArgs.category}
-                showItems={this.state.showItems}
-                clickHandler={this.clickItemHandler}
-              />
-            )}
-            <Pagination
-              pageCount={this.state.page_count}
-              pageNumber={this.state.oArgs.page_number}
-              clickPagePreviousHandler={this.clickPagePreviousHandler}
-              clickPageNextHandler={this.clickPageNextHandler}
-            />
+            <div className="ui grid container" style={{ marginTop: '25px' }}>
+              <div className="ui two column grid">
+                <Options />
+                {this.state.events.length < 1 ? (
+                  <div
+                    className="ui active centered inline large loader"
+                    style={{
+                      width: '100vw',
+                      height: '200px',
+                      marginTop: '50px',
+                      margin: 'auto'
+                    }}
+                  />
+                ) : (
+                  <Items
+                    events={this.state.events}
+                    title={this.state.oArgs.category}
+                    showItems={this.state.showItems}
+                    clickHandler={this.clickItemHandler}
+                  />
+                )}
+                <Pagination
+                  pageCount={this.state.page_count}
+                  pageNumber={this.state.oArgs.page_number}
+                  clickPagePreviousHandler={this.clickPagePreviousHandler}
+                  clickPageNextHandler={this.clickPageNextHandler}
+                />
+              </div>
+            </div>
           </div>
         )}
       </div>

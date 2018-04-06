@@ -1,10 +1,21 @@
 .pointer:hover {
   position: relative;
   top: -2px;
-  box-shadow: 2px 0 5px #616161;
+  box-shadow: 0 2px 3px #616161;
   cursor: pointer;
 }
 
 .grey:hover {
   background-color: #ccc;
+}
+
+.filterInput {
+  margin-bottom: 10px;
+  width: 165px;
+  height: 50px;
+  font-size: 1.1em;
+  border: 1px solid black;
+  text-align: center;
+  background-color: #f4f4f4;
+  border-radius: 5px;
 }
