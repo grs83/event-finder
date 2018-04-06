@@ -46,6 +46,8 @@ export default class App extends Component {
     this.inputSearchChange = this.inputSearchChange.bind(this);
     this.clickHandlerSearchBar = this.clickHandlerSearchBar.bind(this);
     this.clickNoResultsHandler = this.clickNoResultsHandler.bind(this);
+    this.handleSubmitOptions = this.handleSubmitOptions.bind(this);
+    this.onChangeDate = this.onChangeDate.bind(this);
   }
 
   dataFetch() {
@@ -61,6 +63,7 @@ export default class App extends Component {
         });
       }
     });
+    console.log(this.state.events);
   }
 
   clickGenreHandler(event) {
@@ -151,6 +154,24 @@ export default class App extends Component {
     this.dataFetch();
   }
 
+  onChangeDate(event) {
+    const newOargs = Object.assign({}, this.state.oArgs, {
+      when: event.target.value
+    });
+    const state = Object.assign({}, this.state, {
+      oArgs: newOargs
+    });
+    this.setState(state);
+  }
+
+  handleSubmitOptions(event) {
+    event.preventDefault();
+    const state = Object.assign({}, this.state, {
+      events: []
+    });
+    this.setState(state, () => this.dataFetch());
+  }
+
   componentDidMount() {
     event.preventDefault();
     this.setState({
@@ -203,7 +224,10 @@ export default class App extends Component {
             </h2>
             <div className="ui grid container" style={{ marginTop: '25px' }}>
               <div className="ui two column grid">
-                <Options />
+                <Options
+                  onChangeDate={this.onChangeDate}
+                  handleSubmitOptions={this.handleSubmitOptions}
+                />
                 {this.state.events.length < 1 ? (
                   <div
                     className="ui active centered inline large loader"
