@@ -6,7 +6,8 @@ const SearchBar = ({
   inputLocationChange,
   inputSearchChange,
   clickHandler,
-  clickHandlerLogo
+  clickHandlerLogo,
+  keyPressHandler
 }) => {
   return (
     <div
@@ -48,6 +49,7 @@ const SearchBar = ({
           <div className="item">
             <div className="ui icon input">
               <input
+                onKeyPress={keyPressHandler}
                 onChange={inputSearchChange}
                 type="text"
                 value={search || ''}
@@ -62,6 +64,7 @@ const SearchBar = ({
             </div>
             <div className="ui icon input">
               <input
+                onKeyPress={keyPressHandler}
                 onChange={inputLocationChange}
                 type="text"
                 value={location || ''}

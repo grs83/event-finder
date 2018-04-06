@@ -211,7 +211,9 @@ export default class App extends Component {
     return (
       <div>
         <Location
-          welcomeMessage={this.state.welcomeMessage}
+          keyPressHander={e => {
+            e.charCode !== 13 ? null : this.setState({ locationModal: false });
+          }}
           inputChange={this.inputLocationChange}
           clickHandler={() => this.setState({ locationModal: false })}
           locationModal={this.state.locationModal}
@@ -221,6 +223,9 @@ export default class App extends Component {
           noResultsModal={this.state.noResultsModal}
         />
         <SearchBar
+          keyPressHandler={e => {
+            e.charCode !== 13 ? null : this.clickHandlerSearchBar();
+          }}
           inputSearchChange={this.inputSearchChange}
           inputLocationChange={this.inputLocationChange}
           search={this.state.oArgs.keywords}
