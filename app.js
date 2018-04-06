@@ -262,7 +262,7 @@ export default class App extends Component {
               {itemsTitle}
             </h2>
             <div className="ui grid container" style={{ marginTop: '25px' }}>
-              <div className="ui two column grid">
+              <div className="ui two column grid" style={{ paddingRight: 0 }}>
                 <Options
                   onChangeDate={this.onChangeDate}
                   handleSubmitOptions={this.handleSubmitOptions}

@@ -22,7 +22,11 @@ const Item = ({
       : './img/logo.png';
 
   return (
-    <div className="item pointer grey" onClick={() => clickHandler(title)}>
+    <div
+      className="item pointer grey"
+      style={{ margin: '0' }}
+      onClick={() => clickHandler(title)}
+    >
       <div className="content">
         <div className="header" style={{ marginTop: '2%' }}>
           {title}
