@@ -24,5 +24,9 @@ export default [
   {
     title: 'TRADESHOWS',
     img: './img/tradeshows.jpg'
+  },
+  {
+    title: 'All',
+    img: './img/all.jpg'
   }
 ];

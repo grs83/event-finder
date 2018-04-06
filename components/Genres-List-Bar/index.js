@@ -6,10 +6,10 @@ const Genresbar = ({ genresCategories, clickHandler, currentCategory }) => {
       className="ui one column container grid"
       style={{ marginTop: '20px', height: '50px' }}
     >
-      <div className="six ui buttons">
+      <div className="seven ui buttons">
         {genresCategories.map(
           (genre, i) =>
-            genre.title !== currentCategory.toUpperCase() ? (
+            genre.title.toLowerCase() !== currentCategory.toLowerCase() ? (
               <button onClick={clickHandler} className="ui button" key={i}>
                 {genre.title}
               </button>

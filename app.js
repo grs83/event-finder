@@ -203,7 +203,6 @@ export default class App extends Component {
   }
 
   render() {
-    console.log();
     const itemsTitle = this.state.oArgs.category
       ? this.state.oArgs.category.toUpperCase()
       : this.state.searchTitle

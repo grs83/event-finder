@@ -15,7 +15,7 @@ const Genres = ({ clickHandler, genresCategories }) => {
         style={{ marginTop: '15px' }}
       >
         <div className="column">
-          <div className="ui two stackable cards">
+          <div className="ui two centered stackable cards">
             {genresCategories.map((category, i) => {
               return (
                 <Genre
