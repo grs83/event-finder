@@ -35,12 +35,13 @@ export default class App extends Component {
       showModal: false,
       modalItem: {},
       locationModal: false,
-      noResultsModal: false
+      noResultsModal: false,
+      searchTerm: ''
     };
+    this.dataFetch = this.dataFetch.bind(this);
     this.clickGenreHandler = this.clickGenreHandler.bind(this);
     this.clickPagePreviousHandler = this.clickPagePreviousHandler.bind(this);
     this.clickPageNextHandler = this.clickPageNextHandler.bind(this);
-    this.dataFetch = this.dataFetch.bind(this);
     this.clickItemHandler = this.clickItemHandler.bind(this);
     this.clickHandlerModal = this.clickHandlerModal.bind(this);
     this.inputLocationChange = this.inputLocationChange.bind(this);
@@ -50,6 +51,7 @@ export default class App extends Component {
     this.handleSubmitOptions = this.handleSubmitOptions.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onChangeDistance = this.onChangeDistance.bind(this);
+    this.clickHandlerLogo = this.clickHandlerLogo.bind(this);
   }
 
   dataFetch() {
@@ -151,7 +153,11 @@ export default class App extends Component {
   }
 
   clickHandlerSearchBar() {
-    this.setState({ showItems: true, events: [] });
+    this.setState({
+      showItems: true,
+      events: [],
+      searchTerm: this.state.oArgs.keywords
+    });
     this.dataFetch();
   }
 
@@ -183,6 +189,12 @@ export default class App extends Component {
     this.setState(state, () => this.dataFetch());
   }
 
+  clickHandlerLogo() {
+    this.setState({
+      showItems: false
+    });
+  }
+
   componentDidMount() {
     event.preventDefault();
     this.setState({
@@ -190,11 +202,23 @@ export default class App extends Component {
     });
   }
 
+  getItemsTitle(category, searchTerm) {
+    if (category) {
+      return category.toUpperCase();
+    }
+    if (searchTerm) {
+      return `Search For: ${searchTerm.toUpperCase()}`;
+    }
+    return 'Searching All Categories';
+  }
+
   render() {
     return (
       <div>
         <Location
-          welcomeMessage={this.state.welcomeMessage}
+          keyPressHander={e => {
+            e.charCode === 13 && this.setState({ locationModal: false });
+          }}
           inputChange={this.inputLocationChange}
           clickHandler={() => this.setState({ locationModal: false })}
           locationModal={this.state.locationModal}
@@ -204,11 +228,15 @@ export default class App extends Component {
           noResultsModal={this.state.noResultsModal}
         />
         <SearchBar
+          keyPressHandler={e => {
+            e.charCode === 13 && this.clickHandlerSearchBar();
+          }}
           inputSearchChange={this.inputSearchChange}
           inputLocationChange={this.inputLocationChange}
           search={this.state.oArgs.keywords}
           location={this.state.oArgs.location}
           clickHandler={this.clickHandlerSearchBar}
+          clickHandlerLogo={this.clickHandlerLogo}
         />
         <div style={{ height: '100px' }} />
         {!this.state.showItems && (
@@ -236,10 +264,13 @@ export default class App extends Component {
               className="ui center aligned header"
               style={{ marginTop: '50px' }}
             >
-              {this.state.oArgs.category.toUpperCase()}
+              {this.getItemsTitle(
+                this.state.oArgs.category,
+                this.state.searchTerm
+              )}
             </h2>
             <div className="ui grid container" style={{ marginTop: '25px' }}>
-              <div className="ui two column grid">
+              <div className="ui two column grid" style={{ paddingRight: 0 }}>
                 <Options
                   onChangeDate={this.onChangeDate}
                   handleSubmitOptions={this.handleSubmitOptions}

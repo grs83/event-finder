@@ -5,7 +5,9 @@ const SearchBar = ({
   location,
   inputLocationChange,
   inputSearchChange,
-  clickHandler
+  clickHandler,
+  clickHandlerLogo,
+  keyPressHandler
 }) => {
   return (
     <div
@@ -26,7 +28,8 @@ const SearchBar = ({
         style={{ margin: '0 auto', width: '1250px' }}
       >
         <img
-          className="ui mini image"
+          className="ui mini image point"
+          onClick={clickHandlerLogo}
           style={{
             float: 'left',
             height: '50px',
@@ -35,11 +38,18 @@ const SearchBar = ({
           }}
           src="./img/logo-white.png"
         />
-        <h2 style={{ color: 'white', marginLeft: '10px' }}>EVENT FINDER</h2>
+        <h2
+          onClick={clickHandlerLogo}
+          className="point"
+          style={{ color: 'white', marginLeft: '10px' }}
+        >
+          EVENT FINDER
+        </h2>
         <div className="right menu">
           <div className="item">
             <div className="ui icon input">
               <input
+                onKeyPress={keyPressHandler}
                 onChange={inputSearchChange}
                 type="text"
                 value={search || ''}
@@ -54,6 +64,7 @@ const SearchBar = ({
             </div>
             <div className="ui icon input">
               <input
+                onKeyPress={keyPressHandler}
                 onChange={inputLocationChange}
                 type="text"
                 value={location || ''}

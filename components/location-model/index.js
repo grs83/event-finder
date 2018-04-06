@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Location = ({ inputChange, clickHandler, locationModal }) => {
+const Location = ({
+  inputChange,
+  clickHandler,
+  locationModal,
+  keyPressHander
+}) => {
   return (
     <div>
       {locationModal && (
@@ -38,6 +43,7 @@ const Location = ({ inputChange, clickHandler, locationModal }) => {
               style={{ display: 'flex', justifyContent: 'center' }}
             >
               <input
+                onKeyPress={keyPressHander}
                 onChange={inputChange}
                 style={{ width: '50%', textAlign: 'center' }}
                 className="prompt"

@@ -3,7 +3,7 @@ import Item from '../item';
 
 const Items = ({ events, title, showItems, clickHandler }) => {
   return (
-    <div className="twelve wide column">
+    <div className="twelve wide column" style={{ padding: '0' }}>
       <div className="ui divided items">
         {events.map(
           ({ title, image, start_time, venue_name, description, id }) => {
