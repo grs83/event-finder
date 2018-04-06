@@ -8,6 +8,7 @@ import Location from './components/location-model';
 import SearchBar from './components/searchbar';
 import NoResultsModal from './components/searchbar/no-results';
 import Options from './components/search-options';
+import Genresbar from './components/genres-list-bar';
 
 export default class App extends Component {
   constructor(props) {
@@ -226,6 +227,11 @@ export default class App extends Component {
                 clickHandler={this.clickHandlerModal}
               />
             )}
+            <Genresbar
+              clickHandler={this.clickGenreHandler}
+              genresCategories={genresCategories}
+              currentCategory={this.state.oArgs.category}
+            />
             <h2
               className="ui center aligned header"
               style={{ marginTop: '50px' }}
