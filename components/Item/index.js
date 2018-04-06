@@ -9,6 +9,14 @@ const Item = ({
   description,
   clickHandler
 }) => {
+  const descriptionVerified = description
+    ? description.length < 200 ? description : description.slice(0, 200) + '...'
+    : 'Sorry, no description at this time.';
+
+  const imageVerified = image
+    ? image.block200 ? image.block200.url : './img/logo.png'
+    : './img/logo.png';
+
   return (
     <div className="item pointer grey" onClick={() => clickHandler(title)}>
       <div className="content">
@@ -29,11 +37,11 @@ const Item = ({
         <br />
         <span className="venue">Venue: {venue_name}</span>
         <div className="description">
-          <p dangerouslySetInnerHTML={CreateMarkup(description)} />
+          <p dangerouslySetInnerHTML={CreateMarkup(descriptionVerified)} />
         </div>
       </div>
       <div className="ui small image" style={{ paddingLeft: '10px' }}>
-        <img src={image} style={{ marginTop: '10px' }} />
+        <img src={imageVerified} style={{ marginTop: '10px' }} />
       </div>
     </div>
   );
