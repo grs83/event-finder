@@ -50,6 +50,7 @@ export default class App extends Component {
     this.handleSubmitOptions = this.handleSubmitOptions.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onChangeDistance = this.onChangeDistance.bind(this);
+    this.clickHandlerLogo = this.clickHandlerLogo.bind(this);
   }
 
   dataFetch() {
@@ -183,6 +184,12 @@ export default class App extends Component {
     this.setState(state, () => this.dataFetch());
   }
 
+  clickHandlerLogo() {
+    this.setState({
+      showItems: false
+    });
+  }
+
   componentDidMount() {
     event.preventDefault();
     this.setState({
@@ -209,6 +216,7 @@ export default class App extends Component {
           search={this.state.oArgs.keywords}
           location={this.state.oArgs.location}
           clickHandler={this.clickHandlerSearchBar}
+          clickHandlerLogo={this.clickHandlerLogo}
         />
         <div style={{ height: '100px' }} />
         {!this.state.showItems && (
