@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Options = ({ handleSubmitOptions, onChangeDate }) => {
+const Options = ({ handleSubmitOptions, onChangeDate, onChangeDistance }) => {
   return (
     <div className="four wide column">
       <div className="ui fixed sticky">
@@ -20,7 +20,12 @@ const Options = ({ handleSubmitOptions, onChangeDate }) => {
           </select>
           <br />
           <p style={{ marginBottom: '5px' }}>Distance:</p>
-          <select className="filterInput" name="distance" form="distance">
+          <select
+            onChange={onChangeDistance}
+            className="filterInput"
+            name="distance"
+            form="distance"
+          >
             <option value="15">Default</option>
             <option value="5">5 Miles</option>
             <option value="10">10 Miles</option>

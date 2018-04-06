@@ -48,6 +48,7 @@ export default class App extends Component {
     this.clickNoResultsHandler = this.clickNoResultsHandler.bind(this);
     this.handleSubmitOptions = this.handleSubmitOptions.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeDistance = this.onChangeDistance.bind(this);
   }
 
   dataFetch() {
@@ -63,7 +64,6 @@ export default class App extends Component {
         });
       }
     });
-    console.log(this.state.events);
   }
 
   clickGenreHandler(event) {
@@ -164,6 +164,17 @@ export default class App extends Component {
     this.setState(state);
   }
 
+  onChangeDistance(event) {
+    console.log(event.target.value);
+    const newOargs = Object.assign({}, this.state.oArgs, {
+      within: event.target.value
+    });
+    const state = Object.assign({}, this.state, {
+      oArgs: newOargs
+    });
+    this.setState(state);
+  }
+
   handleSubmitOptions(event) {
     event.preventDefault();
     const state = Object.assign({}, this.state, {
@@ -227,6 +238,7 @@ export default class App extends Component {
                 <Options
                   onChangeDate={this.onChangeDate}
                   handleSubmitOptions={this.handleSubmitOptions}
+                  onChangeDistance={this.onChangeDistance}
                 />
                 {this.state.events.length < 1 ? (
                   <div
