@@ -36,7 +36,7 @@ export default class App extends Component {
       modalItem: {},
       locationModal: false,
       noResultsModal: false,
-      searchTitle: ''
+      searchTerm: ''
     };
     this.dataFetch = this.dataFetch.bind(this);
     this.clickGenreHandler = this.clickGenreHandler.bind(this);
@@ -156,7 +156,7 @@ export default class App extends Component {
     this.setState({
       showItems: true,
       events: [],
-      searchTitle: this.state.oArgs.keywords
+      searchTerm: this.state.oArgs.keywords
     });
     this.dataFetch();
   }
@@ -202,17 +202,22 @@ export default class App extends Component {
     });
   }
 
+  getItemsTitle(category, searchTerm) {
+    if (category) {
+      return category.toUpperCase();
+    }
+    if (searchTerm) {
+      return `Search For: ${searchTerm.toUpperCase()}`;
+    }
+    return 'Searching All Categories';
+  }
+
   render() {
-    const itemsTitle = this.state.oArgs.category
-      ? this.state.oArgs.category.toUpperCase()
-      : this.state.searchTitle
-        ? `Search For: ${this.state.searchTitle.toUpperCase()}`
-        : 'Searching All Categories';
     return (
       <div>
         <Location
           keyPressHander={e => {
-            e.charCode !== 13 ? null : this.setState({ locationModal: false });
+            e.charCode === 13 && this.setState({ locationModal: false });
           }}
           inputChange={this.inputLocationChange}
           clickHandler={() => this.setState({ locationModal: false })}
@@ -224,7 +229,7 @@ export default class App extends Component {
         />
         <SearchBar
           keyPressHandler={e => {
-            e.charCode !== 13 ? null : this.clickHandlerSearchBar();
+            e.charCode === 13 && this.clickHandlerSearchBar();
           }}
           inputSearchChange={this.inputSearchChange}
           inputLocationChange={this.inputLocationChange}
@@ -259,7 +264,10 @@ export default class App extends Component {
               className="ui center aligned header"
               style={{ marginTop: '50px' }}
             >
-              {itemsTitle}
+              {this.getItemsTitle(
+                this.state.oArgs.category,
+                this.state.searchTerm
+              )}
             </h2>
             <div className="ui grid container" style={{ marginTop: '25px' }}>
               <div className="ui two column grid" style={{ paddingRight: 0 }}>
