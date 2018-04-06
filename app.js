@@ -35,12 +35,13 @@ export default class App extends Component {
       showModal: false,
       modalItem: {},
       locationModal: false,
-      noResultsModal: false
+      noResultsModal: false,
+      searchTitle: ''
     };
+    this.dataFetch = this.dataFetch.bind(this);
     this.clickGenreHandler = this.clickGenreHandler.bind(this);
     this.clickPagePreviousHandler = this.clickPagePreviousHandler.bind(this);
     this.clickPageNextHandler = this.clickPageNextHandler.bind(this);
-    this.dataFetch = this.dataFetch.bind(this);
     this.clickItemHandler = this.clickItemHandler.bind(this);
     this.clickHandlerModal = this.clickHandlerModal.bind(this);
     this.inputLocationChange = this.inputLocationChange.bind(this);
@@ -152,7 +153,11 @@ export default class App extends Component {
   }
 
   clickHandlerSearchBar() {
-    this.setState({ showItems: true, events: [] });
+    this.setState({
+      showItems: true,
+      events: [],
+      searchTitle: this.state.oArgs.keywords
+    });
     this.dataFetch();
   }
 
@@ -198,6 +203,12 @@ export default class App extends Component {
   }
 
   render() {
+    console.log();
+    const itemsTitle = this.state.oArgs.category
+      ? this.state.oArgs.category.toUpperCase()
+      : this.state.searchTitle
+        ? `Search For: ${this.state.searchTitle.toUpperCase()}`
+        : 'Searching All Categories';
     return (
       <div>
         <Location
@@ -244,7 +255,7 @@ export default class App extends Component {
               className="ui center aligned header"
               style={{ marginTop: '50px' }}
             >
-              {this.state.oArgs.category.toUpperCase()}
+              {itemsTitle}
             </h2>
             <div className="ui grid container" style={{ marginTop: '25px' }}>
               <div className="ui two column grid">
