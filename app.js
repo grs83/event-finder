@@ -150,7 +150,7 @@ export default class App extends Component {
   }
 
   clickHandlerSearchBar() {
-    this.setState({ showItems: true });
+    this.setState({ showItems: true, events: [] });
     this.dataFetch();
   }
 
@@ -165,7 +165,6 @@ export default class App extends Component {
   }
 
   onChangeDistance(event) {
-    console.log(event.target.value);
     const newOargs = Object.assign({}, this.state.oArgs, {
       within: event.target.value
     });
@@ -244,10 +243,7 @@ export default class App extends Component {
                   <div
                     className="ui active centered inline large loader"
                     style={{
-                      width: '100vw',
-                      height: '200px',
-                      marginTop: '50px',
-                      margin: 'auto'
+                      height: '200px'
                     }}
                   />
                 ) : (
